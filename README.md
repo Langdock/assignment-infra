@@ -38,6 +38,33 @@ Your task is to review and improve this infrastructure to make it production-rea
 - Terraform >= 1.0 installed
 - Docker (if you want to build custom containers)
 
+### AWS Credentials Setup:
+You have several options to provide AWS credentials (choose one):
+
+#### Option 1: Environment Variables (Recommended)
+```bash
+export AWS_ACCESS_KEY_ID="your-access-key-id"
+export AWS_SECRET_ACCESS_KEY="your-secret-access-key"
+export AWS_DEFAULT_REGION="us-east-1"
+```
+
+#### Option 2: AWS CLI Configuration
+```bash
+aws configure
+```
+This stores credentials in `~/.aws/credentials`
+
+#### Option 3: Terraform Variables File
+1. Copy the example file: `cp terraform.tfvars.example terraform.tfvars`
+2. Edit `terraform.tfvars` and uncomment/fill in your credentials:
+```hcl
+aws_access_key_id     = "your-access-key-id"
+aws_secret_access_key = "your-secret-access-key"
+aws_region           = "us-east-1"
+```
+
+**Note:** The `terraform.tfvars` file is gitignored and will not be committed to version control.
+
 ### Deployment:
 ```bash
 # Initialize Terraform

@@ -8,7 +8,10 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  region              = var.aws_region
+  access_key          = var.aws_access_key_id
+  secret_key          = var.aws_secret_access_key
+  token               = var.aws_session_token
 }
 
 # VPC and Networking
@@ -111,14 +114,14 @@ resource "aws_security_group" "database" {
 resource "aws_db_instance" "postgres" {
   identifier     = "docuflow-db"
   engine         = "postgres"
-  engine_version = "15.4"
+  engine_version = "15"
   instance_class = "db.t3.micro"
   
   allocated_storage = 20
   storage_type      = "gp2"
   
   db_name  = "docuflow"
-  username = "admin"
+  username = "admin1"
   password = "password123"
   
   vpc_security_group_ids = [aws_security_group.database.id]
@@ -195,7 +198,7 @@ resource "aws_ecs_task_definition" "api" {
         },
         {
           name  = "DB_USER"
-          value = "admin"
+          value = "admin1"
         },
         {
           name  = "DB_PASSWORD"
